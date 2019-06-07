@@ -27,6 +27,10 @@ type Props = React.ElementConfig<typeof TextInput> & {|
    */
   onChangeText?: (query: string) => void,
   /**
+   * Callback to execute if we want the clear button to act as a close.
+   */
+  onClearPress?: () => void,
+  /**
    * Callback to execute if we want the left icon to act as button.
    */
   onIconPress?: () => mixed,
@@ -84,6 +88,9 @@ class Searchbar extends React.Component<Props> {
   _handleClearPress = () => {
     this.clear();
     this.props.onChangeText && this.props.onChangeText('');
+    if (this.props.onClearPress) {
+      this.props.onClearPress();
+    }
   };
 
   _root: ?TextInput;
@@ -134,6 +141,7 @@ class Searchbar extends React.Component<Props> {
       iconColor: customIconColor,
       clearIcon,
       inputStyle,
+      onClearPress,
       ...rest
     } = this.props;
     const { colors, roundness, dark, fonts } = theme;
@@ -185,7 +193,7 @@ class Searchbar extends React.Component<Props> {
         />
         <IconButton
           borderless
-          disabled={!value}
+          disabled={!value && !onClearPress}
           color={value ? iconColor : 'rgba(255, 255, 255, 0)'}
           rippleColor={rippleColor}
           onPress={this._handleClearPress}
