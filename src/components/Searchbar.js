@@ -194,7 +194,7 @@ class Searchbar extends React.Component<Props> {
         <IconButton
           borderless
           disabled={!value && !onClearPress}
-          color={value ? iconColor : 'rgba(255, 255, 255, 0)'}
+          color={value || !onClearPress ? iconColor : 'rgba(255, 255, 255, 0)'}
           rippleColor={rippleColor}
           onPress={this._handleClearPress}
           icon={clearIcon || 'close'}
