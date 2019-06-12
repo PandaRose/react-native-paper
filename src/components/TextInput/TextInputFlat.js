@@ -47,6 +47,7 @@ class TextInputFlat extends React.Component<ChildTextInputProps, {}> {
       onBlur,
       onChangeText,
       onLayoutAnimatedText,
+      textInputStyle,
       ...rest
     } = this.props;
 
@@ -239,6 +240,7 @@ class TextInputFlat extends React.Component<ChildTextInputProps, {}> {
                 fontFamily,
                 textAlignVertical: multiline ? 'top' : 'center',
               },
+              textInputStyle,
             ],
           }: RenderProps)
         )}

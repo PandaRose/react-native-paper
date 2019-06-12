@@ -47,6 +47,7 @@ class TextInputOutlined extends React.Component<ChildTextInputProps, {}> {
       onBlur,
       onChangeText,
       onLayoutAnimatedText,
+      textInputStyle,
       ...rest
     } = this.props;
 
@@ -265,6 +266,7 @@ class TextInputOutlined extends React.Component<ChildTextInputProps, {}> {
                 fontFamily,
                 textAlignVertical: multiline ? 'top' : 'center',
               },
+              textInputStyle,
             ],
           }: RenderProps)
         )}

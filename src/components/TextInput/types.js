@@ -37,6 +37,7 @@ export type State = {
 
 export type ChildTextInputProps = {|
   ...TextInputTypesWithoutMode,
+  textInputStyle?: any,
   parentState: State,
   innerRef: (ref: ?NativeTextInput) => void,
   onFocus?: (args: any) => void,
