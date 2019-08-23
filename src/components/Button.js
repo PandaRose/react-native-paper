@@ -41,6 +41,10 @@ type Props = React.ElementConfig<typeof Surface> & {|
    */
   icon?: IconSource,
   /**
+   * Icon size, default 16
+   */
+  iconSize?: number,
+  /**
    * Whether the button is disabled. A disabled button is greyed out and `onPress` is not called on touch.
    */
   disabled?: boolean,
@@ -112,6 +116,7 @@ class Button extends React.Component<Props, State> {
   static defaultProps = {
     mode: 'text',
     uppercase: true,
+    iconSize: 16,
   };
 
   state = {
@@ -144,6 +149,7 @@ class Button extends React.Component<Props, State> {
       dark,
       loading,
       icon,
+      iconSize,
       color: buttonColor,
       children,
       uppercase,
@@ -224,6 +230,11 @@ class Button extends React.Component<Props, State> {
     const elevation =
       disabled || mode !== 'contained' ? 0 : this.state.elevation;
 
+    const hasLabel = !!React.Children.map(
+      children,
+      child => (typeof child === 'string' ? !!child : true)
+    ).filter(r => r).length;
+
     return (
       <Surface
         {...rest}
@@ -252,8 +263,10 @@ class Button extends React.Component<Props, State> {
         >
           <View style={[styles.content, contentStyle]}>
             {icon && loading !== true ? (
-              <View style={styles.icon}>
-                <Icon source={icon} size={16} color={textColor} />
+              <View
+                style={[hasLabel && styles.iconWithText, { width: iconSize }]}
+              >
+                <Icon source={icon} size={iconSize} color={textColor} />
               </View>
             ) : null}
             {loading ? (
@@ -263,23 +276,25 @@ class Button extends React.Component<Props, State> {
                 style={styles.icon}
               />
             ) : null}
-            <Text
-              numberOfLines={1}
-              style={[
-                styles.label,
-                compact && styles.compactLabel,
-                textStyle,
-                { fontFamily },
-              ]}
-            >
-              {React.Children.map(
-                children,
-                child =>
-                  typeof child === 'string' && uppercase
-                    ? child.toUpperCase()
-                    : child
-              )}
-            </Text>
+            {hasLabel ? (
+              <Text
+                numberOfLines={1}
+                style={[
+                  styles.label,
+                  compact && styles.compactLabel,
+                  textStyle,
+                  { fontFamily },
+                ]}
+              >
+                {React.Children.map(
+                  children,
+                  child =>
+                    typeof child === 'string' && uppercase
+                      ? child.toUpperCase()
+                      : child
+                )}
+              </Text>
+            ) : null}
           </View>
         </TouchableRipple>
       </Surface>
@@ -300,10 +315,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  icon: {
-    width: 16,
+  iconWithText: {
     marginLeft: 12,
-    marginRight: -4,
+    marginRight: -12,
   },
   label: {
     textAlign: 'center',
