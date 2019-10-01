@@ -25,6 +25,10 @@ type Props = React.ElementConfig<typeof Surface> & {|
    */
   dark?: boolean,
   /**
+   * Allow font scaling?
+   */
+  allowFontScaling?: boolean,
+  /**
    * Use a compact look, useful for `text` buttons in a row.
    */
   compact?: boolean,
@@ -117,6 +121,7 @@ class Button extends React.Component<Props, State> {
     mode: 'text',
     uppercase: true,
     iconSize: 16,
+    allowFontScaling: true,
   };
 
   state = {
@@ -143,6 +148,7 @@ class Button extends React.Component<Props, State> {
 
   render() {
     const {
+      allowFontScaling,
       disabled,
       compact,
       mode,
@@ -279,6 +285,7 @@ class Button extends React.Component<Props, State> {
             {hasLabel ? (
               <Text
                 numberOfLines={1}
+                allowFontScaling={allowFontScaling}
                 style={[
                   styles.label,
                   compact && styles.compactLabel,
