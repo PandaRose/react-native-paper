@@ -9,6 +9,10 @@ import type { Theme } from '../types';
 
 type Props = {|
   /**
+   * Scale fonts?
+   */
+  allowFontScaling: boolean,
+  /**
    * Whether the badge is visible
    */
   visible: boolean,
@@ -51,6 +55,7 @@ class Badge extends React.Component<Props, State> {
   static defaultProps = {
     visible: true,
     size: 20,
+    allowFontScaling: true,
   };
 
   state = {
@@ -70,7 +75,7 @@ class Badge extends React.Component<Props, State> {
   }
 
   render() {
-    const { children, size, style, theme } = this.props;
+    const { allowFontScaling, children, size, style, theme } = this.props;
     const { opacity } = this.state;
 
     const { backgroundColor = theme.colors.notification, ...restStyle } =
@@ -82,6 +87,7 @@ class Badge extends React.Component<Props, State> {
     return (
       <Animated.Text
         numberOfLines={1}
+        allowFontScaling={allowFontScaling}
         style={[
           {
             opacity,
