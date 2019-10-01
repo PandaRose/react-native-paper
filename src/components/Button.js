@@ -73,6 +73,7 @@ type Props = React.ElementConfig<typeof Surface> & {|
    * Use this prop to apply custom height and width.
    */
   contentStyle?: any,
+  labelStyle?: any,
   style?: any,
   /**
    * @optional
@@ -164,6 +165,7 @@ class Button extends React.Component<Props, State> {
       style,
       theme,
       contentStyle,
+      labelStyle,
       ...rest
     } = this.props;
     const { colors, roundness } = theme;
@@ -232,7 +234,7 @@ class Button extends React.Component<Props, State> {
       borderRadius: roundness,
     };
     const touchableStyle = { borderRadius: roundness };
-    const textStyle = { color: textColor, fontFamily };
+    const textStyle = { color: textColor, fontFamily, ...(labelStyle || {}) };
     const elevation =
       disabled || mode !== 'contained' ? 0 : this.state.elevation;
 
@@ -289,8 +291,8 @@ class Button extends React.Component<Props, State> {
                 style={[
                   styles.label,
                   compact && styles.compactLabel,
-                  textStyle,
                   { fontFamily },
+                  textStyle,
                 ]}
               >
                 {React.Children.map(
